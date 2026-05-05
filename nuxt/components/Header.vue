@@ -4,8 +4,9 @@
   <header>
     <nav>
       <ul>
-        <li>Home</li>
-        <li>Login</li>
+        <li><NuxtLink to="/">Home</NuxtLink></li>
+        <li><NuxtLink to="/users">Users</NuxtLink></li>
+        <li><NuxtLink to="/login">Login</NuxtLink></li>
       </ul>
     </nav>
   </header>
