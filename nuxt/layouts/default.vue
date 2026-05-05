@@ -1,12 +1,17 @@
 <script setup>
+
+const show = ref(false);
+
 </script>
 
 <template>
-  <fragment>
-    <Header />
-    <div class="container p-4">
-      <slot />
-    </div>
-    <Footer />
-  </fragment>
+  <Header />
+  <LazyDanger v-if="show" />
+
+  <button @click="show = !show">Toggle button</button>
+
+  <div class="container p-4">
+    <slot />
+  </div>
+  <Footer />
 </template>
