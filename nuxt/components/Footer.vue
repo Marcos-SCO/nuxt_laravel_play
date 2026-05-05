@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <footer>
+  <footer class="text text-center">
     <address>Footer</address>
   </footer>
 </template>

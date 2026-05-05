@@ -4,7 +4,9 @@
 <template>
   <fragment>
     <Header />
-    <slot />
+    <div class="container p-4">
+      <slot />
+    </div>
     <Footer />
   </fragment>
 </template>
