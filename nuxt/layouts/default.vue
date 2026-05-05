@@ -1,6 +1,10 @@
 <script setup>
 
-const show = ref(false);
+// const show = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+
+console.log(process.env.NUXT_PUBLIC_API_BASE);
 
 </script>
 
