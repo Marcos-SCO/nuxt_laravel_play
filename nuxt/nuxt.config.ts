@@ -13,15 +13,15 @@ export default defineNuxtConfig({
     apiSecret: process.env.NUXT_API_SECRET || 'default-secret',
 
     dev: {
-      apiBase: process.env.NUXT_DEV_API_BASE || 'http://localhost:8000',
+      apiBase: process.env.NUXT_DEV_API_BASE,
     },
 
     prod: {
-      apiBase: process.env.NUXT_PROD_API_BASE || 'http://localhost:8000',
+      apiBase: process.env.NUXT_PROD_API_BASE,
     },
 
     public: {
-      apiBase: process.env.API_BASE || 'http://localhost:8000',
+      apiBase: process.env.API_BASE,
     },
 
   },
