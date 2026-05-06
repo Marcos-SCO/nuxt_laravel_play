@@ -15,5 +15,7 @@
 <template>
   <div>
     <h2>Home</h2>
+
+    <img src="img/Pepe_the_frog_is_depicted_as_a_beggar_standing_on.jpg" alt="Pepe the frog" width="300" height="300" />
   </div>
 </template>
