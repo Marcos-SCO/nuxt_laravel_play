@@ -13,14 +13,17 @@
 
   const endpoint = "https://fakestoreapi.com/products";
 
-  const { data: products, pending } = await useFetch(endpoint, {
+  const { data: products, pending, error, status, refresh, execute } = await useFetch(endpoint, {
     lazy: true,
+    immediate: false,
+    // server: false,
+    // pick: ['id', 'price', 'image', 'title'],
     transform: (products) => {
       return products.map((product) => ({
         id: product.id,
         price: product.price,
         image: product.image,
-        title: product.title,
+        title: product?.title,
       }));
     },
   });
@@ -28,7 +31,18 @@
 
 <template>
   <div>
-    <h1>Users</h1>
+    <h1 class="text-3xl font-bold text-green-500">Users</h1>
+
+    <p class="mb-4 font-bold mb-4">Status: {{ status }}</p>
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" @click="execute">
+      Execute API Call (immediate: true)
+    </button>
+
+    <div v-if="error">
+      Error: {{ error.message }}
+      Error: {{ error.statusCode }}
+    </div>
 
     <div v-if="pending">Loading...</div>
     <div v-else>
@@ -46,6 +60,6 @@
         </li>
       </ul>
     </div>
-    
+
   </div>
 </template>
