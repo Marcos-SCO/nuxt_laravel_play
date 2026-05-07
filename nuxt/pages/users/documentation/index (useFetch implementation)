@@ -12,21 +12,27 @@
   });
 
   const config = useRuntimeConfig();
+
+  /*const endpoint = "https://fakestoreapi.com/products";
+
+  const { data: products, pending, error, status, refresh, execute } = await useFetch(endpoint, {
+    lazy: true,
+    immediate: false,
+    // server: false,
+    // pick: ['id', 'price', 'image', 'title'],
+    transform: (products) => {
+      return products.map((product) => ({
+        id: product.id,
+        price: product.price,
+        image: product.image,
+        title: product?.title,
+      }));
+    },
+  });
+  */
+
   const cursor = ref(null);
-
   const endpoint = config.public.apiBase + "/users";
-
-  const nextPage = () => {
-    if (users?.value?.next_cursor) {
-      cursor.value = users.value.next_cursor;
-    }
-  };
-
-  const prevPage = () => {
-    if (users?.value?.prev_cursor) {
-      cursor.value = users.value.prev_cursor;
-    }
-  };
 
   const {
     data: users,
@@ -35,22 +41,27 @@
     status,
     refresh,
     execute,
-  } = await useAsyncData(
-    `users-${cursor.value}`,
-    () =>
-      $fetch(endpoint, {
-        query: { cursor: cursor.value },
-      }),
-    {
-      lazy: true,
-      immediate: false,
-      method: 'POST',
-      watch: [cursor],
-    },
-  );
+  } = await useFetch(endpoint, {
+    lazy: true,
+    // immediate: false,
+    // server: false,
+    // pick: ['id', 'price', 'image', 'title'],
+    query: { cursor },
+  });
 
-  console.log(cursor);
   console.log(users);
+
+  const nextPage = () => {
+    if (users.value?.next_cursor) {
+      cursor.value = users.value.next_cursor;
+    }
+  };
+
+  const prevPage = () => {
+    if (users.value?.prev_cursor) {
+      cursor.value = users.value.prev_cursor;
+    }
+  };
 </script>
 
 <template>
@@ -63,7 +74,7 @@
       Execute API Call (immediate: true)
     </button>
 
-    <div v-if="error">Error: {{ error.message }} Error: {{ error.statusText }}</div>
+    <div v-if="error">Error: {{ error.message }} Error: {{ error.statusCode }}</div>
 
     <div v-if="pending">Loading...</div>
     <div v-else>
