@@ -1,5 +1,6 @@
 <script setup>
   const route = useRoute();
+  const router = useRouter();
 
   useHead({
     title: "Users",
@@ -12,7 +13,7 @@
   });
 
   const config = useRuntimeConfig();
-  const cursor = ref(null);
+  const cursor = ref(router.currentRoute.value.query.cursor || null);
 
   const endpoint = config.public.apiBase + "/users";
   const endpoint2 = "https://fakestoreapi.com/products";
@@ -20,12 +21,14 @@
   const nextPage = () => {
     if (users?.value?.next_cursor) {
       cursor.value = users.value.next_cursor;
+      router.push({ query: { cursor: cursor.value } });
     }
   };
 
   const prevPage = () => {
     if (users?.value?.prev_cursor) {
       cursor.value = users.value.prev_cursor;
+      router.push({ query: { cursor: cursor.value } });
     }
   };
 
@@ -91,8 +94,22 @@
       </ul>
 
       <nav class="flex gap-4" v-if="users?.prev_cursor || users?.next_cursor">
-        <button @click="prevPage" :disabled="!users?.prev_cursor">Previous</button>
-        <button @click="nextPage" :disabled="!users?.next_cursor">Next</button>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          :class="{ 'disabled bg-gray-300 hover:bg-gray-300 cursor-not-allowed': !users?.prev_cursor }"
+          @click="prevPage"
+          :disabled="!users?.prev_cursor"
+        >
+          Previous
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          :class="{ 'disabled bg-gray-300 hover:bg-gray-500 cursor-not-allowed': !users?.next_cursor }"
+          @click="nextPage"
+          :disabled="!users?.next_cursor"
+        >
+          Next
+        </button>
       </nav>
     </div>
   </div>

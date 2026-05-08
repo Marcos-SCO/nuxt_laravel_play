@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         // return User::all();
-        return User::orderBy('id')->cursorPaginate(20);
+        return User::orderBy('id')->cursorPaginate(10);
     }
 
     /**
