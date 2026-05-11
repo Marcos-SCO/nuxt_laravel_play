@@ -18,6 +18,12 @@
   const endpoint = config.public.apiBase + "/users";
   const endpoint2 = "https://fakestoreapi.com/products";
 
+  const columns = [
+    { accessorKey: "id", header: "Id" },
+    { accessorKey: "name", header: "User Name" },
+    { accessorKey: "email", header: "Email" },
+  ];
+
   const nextPage = () => {
     if (users?.value?.next_cursor) {
       cursor.value = users.value.next_cursor;
@@ -72,12 +78,15 @@
     <div v-if="error">Error: {{ error.message }} Error: {{ error.statusText }}</div>
 
     <div v-if="pending">Loading...</div>
-    <div v-else>
-      <ul class="flex flex-wrap">
-        <li v-for="(user, index) in users?.data" :key="user.id">
-          <NuxtLink :to="`/users/${user.id}`" class="block mb-4 p-4 border rounded max-w-25">Details</NuxtLink>
 
-          <figure class="mb-4 p-4 border rounded max-w-25">
+    <div v-else>
+      <UTable :data="users?.data" :columns="columns" />
+
+      <ul class="flex flex-wrap justify-between">
+        <li v-for="(user, index) in users?.data" :key="user.id" class="width-1/2 md:width-1/3 md:width-1/3 p-2">
+          <NuxtLink :to="`/users/${user.id}`" class="block mb-4 p-4 border rounded m-2">Details</NuxtLink>
+
+          <figure class="w-full mb-4 p-4 border rounded">
             <figcaption>
               <h3>{{ user?.name }}</h3>
               <p>Email: {{ user?.email }}</p>
@@ -87,6 +96,7 @@
               :alt="user?.name"
               width="200"
               height="200"
+              class="width-full h-auto object-cover rounded"
               :loading="index > 8 ? 'lazy' : 'eager'"
             />
           </figure>

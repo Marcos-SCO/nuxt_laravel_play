@@ -1,13 +1,25 @@
-<script setup></script>
+<script setup>
+  const items = [
+    {
+      label: "Home",
+      icon: "i-lucide-home",
+      to: "/",
+    },
+    {
+      label: "Users",
+      icon: "i-heroicons-users",
+      to: "/users",
+    },
+    {
+      label: "Login",
+      icon: "i-heroicons-folder",
+      to: "/login",
+    },
+  ];
+</script>
 
 <template>
   <header>
-    <nav class="container bg-black text-white p-4">
-      <ul class="flex gap-5">
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/users">Users</NuxtLink></li>
-        <li><NuxtLink to="/login">Login</NuxtLink></li>
-      </ul>
-    </nav>
+    <UNavigationMenu :items="items" />
   </header>
 </template>
