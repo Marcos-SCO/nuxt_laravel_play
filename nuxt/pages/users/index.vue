@@ -22,6 +22,7 @@
     { accessorKey: "id", header: "Id" },
     { accessorKey: "name", header: "User Name" },
     { accessorKey: "email", header: "Email" },
+    { accessorKey: "created_at", header: "Created At" },
   ];
 
   const nextPage = () => {
@@ -80,7 +81,11 @@
     <div v-if="pending">Loading...</div>
 
     <div v-else>
-      <UTable :data="users?.data" :columns="columns" />
+      <UTable :data="users?.data" :columns="columns">
+        <template #created_at-cell="{ row }">
+          {{ dateFormat(row.getValue("created_at")) }}
+        </template>
+      </UTable>
 
       <ul class="flex flex-wrap justify-between">
         <li v-for="(user, index) in users?.data" :key="user.id" class="width-1/2 md:width-1/3 md:width-1/3 p-2">
