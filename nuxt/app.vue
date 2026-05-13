@@ -8,4 +8,6 @@
       <NuxtPage />
     </UApp>
   </NuxtLayout>
+  
+   <UModals />
 </template>
