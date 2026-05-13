@@ -4,7 +4,7 @@
 
 const runtimeConfig = useRuntimeConfig();
 
-console.log(process.env.NUXT_PUBLIC_API_BASE);
+// console.log(process.env.NUXT_PUBLIC_API_BASE);
 
 </script>
 
