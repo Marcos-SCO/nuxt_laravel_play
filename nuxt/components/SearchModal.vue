@@ -2,17 +2,21 @@
   import PostsSearch from "./PostsSearch.vue";
   import UsersSearch from "./UsersSearch.vue";
 
+  defineProps({
+    close: Function
+  });
+
   const isOpen = ref(false);
   const loading = ref(false);
   const inputSearch = ref("");
-
+  
   const config = useRuntimeConfig();
-
+  
   const results = reactive({
     users: [],
     posts: [],
   });
-
+  
   const searchData = async () => {
     if (!inputSearch.value.trim()) {
       results.users.value = [];
@@ -50,6 +54,7 @@
       results.users = [];
     }
   });
+
 </script>
 
 <template>
@@ -69,12 +74,12 @@
 
       <div v-if="results.users.length">
         <USeparator orientation="vertical" :label="`USERS FOUND (${results.users.length})`" class="my-3" />
-        <UsersSearch :users="results.users" />
+        <UsersSearch :users="results.users" :close="close" />
       </div>
 
       <div v-if="results.posts.length">
         <USeparator orientation="vertical" :label="`POSTS FOUND (${results.posts.length})`" class="my-3" />
-        <PostsSearch :posts="results.posts" />
+        <PostsSearch :posts="results.posts" :close="close" />
       </div>
     </template>
   </UModal>

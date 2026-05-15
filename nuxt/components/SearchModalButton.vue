@@ -5,7 +5,9 @@
   const modal = overlay.create(SearchModal);
 
   const openModal = () => {
-    modal.open();
+    modal.open({
+      close: () => modal.close()
+    });
   };
 </script>
 
