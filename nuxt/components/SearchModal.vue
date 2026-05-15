@@ -8,6 +8,8 @@
 
   const isOpen = ref(false);
   const loading = ref(false);
+
+  const searched = ref(false);
   const inputSearch = ref("");
   
   const config = useRuntimeConfig();
@@ -25,6 +27,7 @@
     }
 
     loading.value = true;
+    searched.value = true;
 
     try {
       const data = await $fetch(`${config.public.apiBase}/search`, {
@@ -48,7 +51,7 @@
     }
   };
 
-  watch(inputSearch, (value) => {
+  watch([inputSearch], ([value]) => {
     if (!value.length) {
       results.posts = [];
       results.users = [];
@@ -80,6 +83,10 @@
       <div v-if="results.posts.length">
         <USeparator orientation="vertical" :label="`POSTS FOUND (${results.posts.length})`" class="my-3" />
         <PostsSearch :posts="results.posts" :close="close" />
+      </div>
+
+      <div v-if="searched && !(results.users.length) && !(results.users.length)">
+        <p class="m-2 mt-3 text-center">No results found...</p>
       </div>
     </template>
   </UModal>

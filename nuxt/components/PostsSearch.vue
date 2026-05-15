@@ -8,7 +8,7 @@
 
   const goToPostPage = (slug) => {
     close();
-    router.push(`/posts/${slug}`);
+    router.push(`/posts/${slug}`); 
   };
 </script>
 
