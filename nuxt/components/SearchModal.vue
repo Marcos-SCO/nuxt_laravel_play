@@ -3,22 +3,24 @@
   import UsersSearch from "./UsersSearch.vue";
 
   defineProps({
-    close: Function
+    close: Function,
   });
+
+  const config = useRuntimeConfig();
+
+  const toast = useToast();
 
   const isOpen = ref(false);
   const loading = ref(false);
 
   const searched = ref(false);
   const inputSearch = ref("");
-  
-  const config = useRuntimeConfig();
-  
+
   const results = reactive({
     users: [],
     posts: [],
   });
-  
+
   const searchData = async () => {
     if (!inputSearch.value.trim()) {
       results.users.value = [];
@@ -43,8 +45,21 @@
       console.log("Search results:", data);
       results.users = data.users || [];
       results.posts = data.posts || [];
+
+      toast.add({
+        title: "fetch success",
+        description: "Success fetching...",
+        color: "success",
+      });
     } catch (error) {
       console.error("Error fetching search results:", error);
+
+      toast.add({
+        title: "Error fetching",
+        description: error.message,
+        color: "error",
+      });
+
       return [];
     } finally {
       loading.value = false;
@@ -57,7 +72,6 @@
       results.users = [];
     }
   });
-
 </script>
 
 <template>
@@ -85,7 +99,7 @@
         <PostsSearch :posts="results.posts" :close="close" />
       </div>
 
-      <div v-if="searched && !(results.users.length) && !(results.users.length)">
+      <div v-if="searched && !results.users.length && !results.users.length">
         <p class="m-2 mt-3 text-center">No results found...</p>
       </div>
     </template>

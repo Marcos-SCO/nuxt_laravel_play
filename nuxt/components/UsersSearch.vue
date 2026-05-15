@@ -6,8 +6,17 @@
 
   const router = useRouter();
 
+  const toast = useToast();
+
   const goToUserPage = (id) => {
     close();
+    toast.add({
+      title: "toaatyyy",
+      description: "works?",
+      color: "success",
+      // icon: 'i-lucide-search',
+    });
+
     router.push(`/users/${id}`);
   };
 </script>
