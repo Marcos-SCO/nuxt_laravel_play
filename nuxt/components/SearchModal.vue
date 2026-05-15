@@ -1,4 +1,7 @@
 <script setup>
+  import PostsSearch from "./PostsSearch.vue";
+  import UsersSearch from "./UsersSearch.vue";
+
   const isOpen = ref(false);
   const loading = ref(false);
   const inputSearch = ref("");
@@ -40,6 +43,13 @@
       loading.value = false;
     }
   };
+
+  watch(inputSearch, (value) => {
+    if (!value.length) {
+      results.posts = [];
+      results.users = [];
+    }
+  });
 </script>
 
 <template>
@@ -59,30 +69,12 @@
 
       <div v-if="results.users.length">
         <USeparator orientation="vertical" :label="`USERS FOUND (${results.users.length})`" class="my-3" />
-        <ul :class="{ scroll: results.users.length > 5 }">
-          <li
-            v-for="user in results.users"
-            :key="user.id"
-            class="flex items-center justify-start mb-3 p-2 border-b border-gray-200 dark:border-gray-700"
-          >
-            <img :src="user.avatar" :alt="user.name" class="w-8 h-8 mr-2 rounded-full ml-4" />
-            <a href="" @click.prevent="`/users/${user.id}`">{{ user.name }}</a>
-          </li>
-        </ul>
+        <UsersSearch :users="results.users" />
       </div>
 
       <div v-if="results.posts.length">
         <USeparator orientation="vertical" :label="`POSTS FOUND (${results.posts.length})`" class="my-3" />
-        <ul :class="{ scroll: results.posts.length > 5 }">
-          <li
-            v-for="post in results.posts"
-            :key="post.id"
-            class="flex items-center justify-start mb-3 p-2 border-b border-gray-200 dark:border-gray-700"
-          >
-            <img :src="post.thumb" :alt="post.title" class="w-8 h-8 mr-2 rounded-full ml-4" />
-            <a href="" @click.prevent="`/posts/${post.slug}`">{{ post.title }}</a>
-          </li>
-        </ul>
+        <PostsSearch :posts="results.posts" />
       </div>
     </template>
   </UModal>
